@@ -6,7 +6,7 @@ A comprehensive exploration of the Vercel AI SDK showcasing various AI capabilit
 
 ### 1. **Basic Text Generation & Server Setup**
 
-- **Files**: `main.ts`, `server.ts`, `models.ts`
+- **Files**: `src/core/main.ts`, `src/core/server.ts`, `src/core/models.ts`
 - **Capabilities**:
   - HTTP server with Hono framework
   - Basic text completion using Anthropic Claude models
@@ -15,7 +15,7 @@ A comprehensive exploration of the Vercel AI SDK showcasing various AI capabilit
 
 ### 2. **Tool Calling & Function Execution**
 
-- **Files**: `agent.ts`, `tool_calling.ts`
+- **Files**: `src/examples/agent.ts`, `src/examples/tool_calling.ts`
 - **Capabilities**:
   - Dynamic tool creation with Zod schemas
   - Weather API simulation
@@ -25,7 +25,7 @@ A comprehensive exploration of the Vercel AI SDK showcasing various AI capabilit
 
 ### 3. **Image Analysis & Description**
 
-- **File**: `describe-images.ts`
+- **File**: `src/examples/describe-images.ts`
 - **Capabilities**:
   - Image-to-text description generation
   - Support for local files and URLs
@@ -34,7 +34,7 @@ A comprehensive exploration of the Vercel AI SDK showcasing various AI capabilit
 
 ### 4. **PDF Document Processing**
 
-- **File**: `extract-from-pdf.ts`
+- **File**: `src/examples/extract-from-pdf.ts`
 - **Capabilities**:
   - PDF text extraction and analysis
   - Structured data extraction from invoices
@@ -43,7 +43,7 @@ A comprehensive exploration of the Vercel AI SDK showcasing various AI capabilit
 
 ### 5. **Structured Output Generation**
 
-- **File**: `structured-output.ts`
+- **File**: `src/examples/structured-output.ts`
 - **Capabilities**:
   - Recipe generation with streaming
   - Complex nested object creation
@@ -52,7 +52,7 @@ A comprehensive exploration of the Vercel AI SDK showcasing various AI capabilit
 
 ### 6. **Enum Classification**
 
-- **File**: `generate-enum.ts`
+- **File**: `src/examples/generate-enum.ts`
 - **Capabilities**:
   - Sentiment analysis (positive/negative/neutral)
   - Enum-based classification
@@ -60,7 +60,7 @@ A comprehensive exploration of the Vercel AI SDK showcasing various AI capabilit
 
 ### 7. **Local LLM Integration**
 
-- **File**: `local-llm.single-file.ts`
+- **File**: `src/examples/local-llm.single-file.ts`
 - **Capabilities**:
   - LM Studio integration
   - Local model hosting support
@@ -69,7 +69,7 @@ A comprehensive exploration of the Vercel AI SDK showcasing various AI capabilit
 
 ### 8. **Vector Embeddings & Similarity Search**
 
-- **File**: `vector_embeddings.ts`
+- **File**: `src/examples/vector_embeddings.ts`
 - **Capabilities**:
   - Text embedding generation
   - Cosine similarity calculations
@@ -118,49 +118,49 @@ bun install
 #### Basic Text Generation
 
 ```bash
-bun run main.ts
+bun run src/core/main.ts
 ```
 
 #### PDF Data Extraction
 
 ```bash
-bun run extract-from-pdf.ts
+bun run src/examples/extract-from-pdf.ts
 ```
 
 #### Image Description
 
 ```bash
-bun run describe-images.ts
+bun run src/examples/describe-images.ts
 ```
 
 #### Tool Calling
 
 ```bash
-bun run agent.ts
+bun run src/examples/agent.ts
 ```
 
 #### Structured Output (Recipe Generation)
 
 ```bash
-bun run structured-output.ts
+bun run src/examples/structured-output.ts
 ```
 
 #### Sentiment Analysis
 
 ```bash
-bun run generate-enum.ts
+bun run src/examples/generate-enum.ts
 ```
 
 #### Local LLM
 
 ```bash
-bun run local-llm.single-file.ts
+bun run src/examples/local-llm.single-file.ts
 ```
 
 #### Vector Embeddings
 
 ```bash
-bun run vector_embeddings.ts
+bun run src/examples/vector_embeddings.ts
 ```
 
 ## 🔧 Configuration
@@ -171,33 +171,60 @@ bun run vector_embeddings.ts
   - Anthropic (for Claude models)
   - Cohere (for embeddings)
   - OpenAI (if using OpenAI models)
+- API keys should be stored in `config/keys.txt`
 
 ### Local LLM Setup
 
 - Install and run LM Studio on localhost:1234
 - Or configure any OpenAI-compatible endpoint
+- Configuration files are located in `config/` directory
 
 ## 📁 Project Structure
 
 ```
 vercel-ai-sdk/
-├── agent.ts                 # Tool calling with weather API
-├── describe-images.ts       # Image analysis and description
-├── extract-from-pdf.ts      # PDF document processing
-├── generate-enum.ts         # Enum-based classification
-├── local-llm.single-file.ts # Local LLM integration
-├── main.ts                  # Basic text generation example
-├── models.ts                # Model configurations
-├── server.ts                # HTTP server setup
-├── structured-output.ts     # Complex object generation
-├── tool_calling.ts          # Basic tool calling example
-├── utils.ts                 # Utility functions
-├── vector_embeddings.ts     # Vector similarity search
-├── example.json             # Sample structured output
-├── fireworks.jpg            # Sample image for testing
-├── sale_invoice.pdf         # Sample PDF for extraction
-└── keys.txt                 # API keys (empty template)
+├── src/
+│   ├── examples/           # All example implementations
+│   │   ├── agent.ts
+│   │   ├── describe-images.ts
+│   │   ├── extract-from-pdf.ts
+│   │   ├── generate-enum.ts
+│   │   ├── local-llm.single-file.ts
+│   │   ├── structured-output.ts
+│   │   ├── tool_calling.ts
+│   │   └── vector_embeddings.ts
+│   ├── core/              # Core application files
+│   │   ├── main.ts
+│   │   ├── models.ts
+│   │   └── server.ts
+│   └── utils/             # Utility functions
+│       └── utils.ts
+├── assets/                # Static assets
+│   ├── images/
+│   │   └── fireworks.jpg
+│   └── documents/
+│       └── sale_invoice.pdf
+├── config/                # Configuration files
+│   ├── tsconfig.json
+│   └── keys.txt
+├── data/                  # Sample data
+│   └── example.json
+├── docs/                  # Documentation
+│   └── README.md
+├── package.json
+├── bun.lock
+└── node_modules/
 ```
+
+### 🏗️ **Structure Benefits**
+
+- **📁 Organized Examples**: All AI SDK examples are grouped in `src/examples/` for easy discovery
+- **🔧 Core Logic Separation**: Main application files are in `src/core/` for better maintainability
+- **🛠️ Utility Functions**: Shared utilities are in `src/utils/` for reusability
+- **📦 Asset Management**: Images and documents are properly organized in `assets/`
+- **⚙️ Configuration**: All config files are centralized in `config/`
+- **📊 Sample Data**: Example data is separated in `data/`
+- **📚 Documentation**: README and docs are in `docs/` for better organization
 
 ## 🎯 Key Concepts Demonstrated
 
