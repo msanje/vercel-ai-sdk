@@ -1,0 +1,16 @@
+{
+  "recipe": {
+    "name": "Chocolate Cake",
+    "ingredients": [
+      {
+        "name": "flour",
+        "amount": "2 cups"
+      },
+      {
+        "name": "sugar",
+        "amount": "1.5 cups"
+      }
+    ],
+    "steps": ["Preheat oven to 350°F (175°C)."]
+  }
+}
