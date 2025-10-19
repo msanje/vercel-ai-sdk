@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^2.0.33",
+    "@ai-sdk/cohere": "^2.0.14",
     "@ai-sdk/openai": "^2.0.52",
     "@ai-sdk/openai-compatible": "^1.0.22",
     "@ai-sdk/vercel": "^1.0.23",
