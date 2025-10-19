@@ -1,18 +1,41 @@
-import { generateText, type LanguageModel } from "ai";
-import { anthropic } from "@ai-sdk/anthropic";
-import { openai } from "@ai-sdk/openai";
+import type { CoreMessage } from "ai";
+import { startServer } from "./server";
 
-export const ask = async (prompt: string, model: LanguageModel) => {
-  const { text } = await generateText({
-    model,
-    prompt,
-  });
+const messagesToSend: CoreMessage[] = [
+  {
+    role: "user",
+    content: "What's the capital of Wales?",
+  },
+];
 
-  return text;
-};
+await startServer();
 
-const prompt = `Tell me a story about your grandmother.`;
+const response = await fetch("http://localhost:4317/api/get-completions", {
+  method: "POST",
+  body: JSON.stringify(messagesToSend),
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
-const anthropicResult = await ask(prompt, anthropic("claude-3-5-haiku-latest"));
+const newMessages = (await response.json()) as CoreMessage[];
 
-const openaiResult = await ask(prompt, openai("gpt-4o-mini-2024-07-18"));
+const allMessages = [...messagesToSend, ...newMessages];
+
+console.dir(allMessages, { depth: null });
+
+// messages example
+// const messages: CoreMessage[] = [
+//   {
+//     role: "system",
+//     content: "You are a friendly greeter.",
+//   },
+//   {
+//     role: "user",
+//     content: "Hello, you!",
+//   },
+//   {
+//     role: "assistant",
+//     content: "Hi there!",
+//   },
+// ];
