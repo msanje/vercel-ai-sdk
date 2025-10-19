@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { smallToolCallingModel } from "./models.ts";
-import { generateObject } from "ai";
+import { generateObject, streamObject } from "ai";
+import { anthropic } from "@ai-sdk/anthropic";
 
-const model = smallToolCallingModel;
+const model = anthropic("claude-3-5-haiku-latest");
 
 const schema = z.object({
   recipe: z.object({
@@ -20,7 +21,7 @@ const schema = z.object({
 });
 
 export const createRecipe = async (prompt: string) => {
-  const { object } = await generateObject({
+  const result = streamObject({
     model,
     schema,
     prompt,
@@ -32,9 +33,18 @@ export const createRecipe = async (prompt: string) => {
       `like Coriander over Cilantro`,
   });
 
-  return object.recipe;
+  for await (const obj of result.partialObjectStream) {
+    console.clear();
+    console.dir(obj, { depth: null });
+  }
+
+  const finalObject = await result.object;
+
+  return finalObject.recipe;
 };
 
-const recipe = await createRecipe("How to make baba ganoush");
+const recipe = await createRecipe("How to make ragi muddhe and koli saaru");
 
-console.log("recipe: ", recipe);
+// const recipe = await createRecipe("How to make baba ganoush");
+//
+// console.log("recipe: ", recipe);
